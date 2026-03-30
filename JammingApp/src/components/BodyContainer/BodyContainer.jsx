@@ -1,5 +1,6 @@
 import styles from './BodyContainer.module.css';
 import SearchBar from '../SearchBar/SearchBar.jsx';
+import SearchResults from '../SearchResults/SearchResults.jsx';
 
 function BodyContainer(props){
 
@@ -8,6 +9,7 @@ function BodyContainer(props){
             <div className={styles.searchBarWrapper}>
                 <SearchBar searchText={props.searchText} searchEntryHandler={props.searchEntryHandler} />
             </div>
+            <SearchResults results={props.searchResults} />
         </section>
     );
 }
