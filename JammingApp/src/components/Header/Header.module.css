@@ -1,0 +1,13 @@
+.header{
+    background-color: #0a0035;
+    display: flex;
+    justify-content: center;
+}
+
+.header h1{
+    display: flex;
+}
+
+.styledms{
+    color: #7100d9;
+}

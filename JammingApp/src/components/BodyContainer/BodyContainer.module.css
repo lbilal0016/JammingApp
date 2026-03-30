@@ -1,0 +1,10 @@
+.bodyContainer{
+    background-image: url("../../assets/facundo-giovannone-lofilevelsequence-3574.jpg");
+    height: 1000px;
+}
+
+.searchBarWrapper{
+    margin-top: 10%;
+    display: flex;
+    justify-content: center;
+}
