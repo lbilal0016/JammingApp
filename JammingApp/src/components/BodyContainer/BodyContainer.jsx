@@ -1,6 +1,7 @@
 import styles from './BodyContainer.module.css';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import SearchResults from '../SearchResults/SearchResults.jsx';
+import Tracklist from '../Tracklist/Tracklist.jsx';
 
 function BodyContainer(props){
 
@@ -9,7 +10,14 @@ function BodyContainer(props){
             <div className={styles.searchBarWrapper}>
                 <SearchBar searchText={props.searchText} searchEntryHandler={props.searchEntryHandler} />
             </div>
-            <SearchResults results={props.searchResults} />
+            <div className={styles.resultsAndTrackListWrapper}>
+                <div id="resultsWrapper" className={styles.resultsWrapper}>
+                    <SearchResults results={props.searchResults} />
+                </div>
+                <div id="trackListWrapper" className={styles.trackListWrapper}>
+                    <Tracklist results={props.searchResults} />
+                </div>
+            </div>
         </section>
     );
 }

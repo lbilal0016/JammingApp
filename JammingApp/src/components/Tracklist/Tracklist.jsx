@@ -1,7 +1,7 @@
-import styles from './SearchResults.module.css';
+import styles from './Tracklist.module.css';
 import Track from '../Track/Track.jsx';
 
-function SearchResults({results}){
+function Tracklist({results}){
     return (
         <section id="searchResults" className={styles.searchResults}>
             {
@@ -11,7 +11,7 @@ function SearchResults({results}){
                             <div className={styles.trackWrapper}>
                                 <Track result={result} index={index} />
                             </div>
-                            <button className={styles.addButton}>+</button>
+                            <button className={styles.addButton}>-</button>
                         </div>
                     );
                 })
@@ -20,4 +20,4 @@ function SearchResults({results}){
     );
 }
 
-export default SearchResults;
+export default Tracklist;

@@ -8,3 +8,20 @@
     display: flex;
     justify-content: center;
 }
+
+.resultsAndTrackListWrapper{
+    margin-top: 10%;
+    display: flex;
+    justify-content: center;
+}
+
+.resultsWrapper, .trackListWrapper{
+    background-color: #333333;
+    opacity: 80%;
+    border: 0.01rem whitesmoke solid;
+    width: 40%;
+}
+
+.resultsWrapper{ 
+    margin-right: 2.5%;
+}

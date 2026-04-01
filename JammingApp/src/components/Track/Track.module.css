@@ -1,0 +1,7 @@
+.track h1{
+ font-size: 1.5rem;
+}
+
+.track h1, .track h2, .track p{
+    width: 100%;
+}
