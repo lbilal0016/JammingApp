@@ -1,7 +1,7 @@
 import styles from './Tracklist.module.css';
 import Track from '../Track/Track.jsx';
 
-function Tracklist({selectedSongs, trackListText, trackListTextHandler}){
+function Tracklist({selectedSongs, trackListText, trackListTextHandler, removeSongHandler}){
     return (
         <div id="trackListComponentWrapper">
             <input type="text" value={trackListText} onChange={trackListTextHandler} className={styles.trackListTextField}></input>
@@ -13,7 +13,7 @@ function Tracklist({selectedSongs, trackListText, trackListTextHandler}){
                                 <div className={styles.trackWrapper}>
                                     <Track result={song} index={song.id} />
                                 </div>
-                                <button className={styles.addButton}>-</button>
+                                <button className={styles.addButton} onClick={() => {removeSongHandler(song.id)}}>-</button>
                             </div>
                         );
                     })

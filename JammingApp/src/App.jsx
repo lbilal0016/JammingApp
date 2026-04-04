@@ -47,6 +47,14 @@ function App() {
     setSelectedSongs(prevSelectedSongs => [...prevSelectedSongs, newSong]);
   };
 
+  const removeSongHandler = (removedSongId) => {
+    setSelectedSongs((prevSelectedSongs) => {
+      return prevSelectedSongs.filter((selectedSong) => {
+        return selectedSong.id !== removedSongId;
+      })
+    });
+  };
+
   return (
     <>
       <Header />
@@ -59,6 +67,7 @@ function App() {
       trackListTextHandler={trackListTextHandler}
       selectedSongs={selectedSongs}
       addSongHandler={addSongHandler}
+      removeSongHandler={removeSongHandler}
 
       />  
     </>

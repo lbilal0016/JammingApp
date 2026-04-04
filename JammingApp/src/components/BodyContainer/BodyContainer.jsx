@@ -19,7 +19,7 @@ function BodyContainer(props){
                     <SearchResults results={props.searchResults} addSongHandler={props.addSongHandler} />
                 </div>
                 <div id="trackListWrapper" className={styles.trackListWrapper}>
-                    <Tracklist selectedSongs={props.selectedSongs} trackListText={props.trackListText} trackListTextHandler={props.trackListTextHandler}/>
+                    <Tracklist selectedSongs={props.selectedSongs} trackListText={props.trackListText} trackListTextHandler={props.trackListTextHandler} removeSongHandler={props.removeSongHandler} />
                 </div>
             </div>
         </section>
