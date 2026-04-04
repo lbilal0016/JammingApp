@@ -16,10 +16,10 @@ function BodyContainer(props){
             </div>
             <div id="resultsAndTracklistWrapper" className={styles.resultsAndTrackListWrapper}>
                 <div id="resultsWrapper" className={styles.resultsWrapper}>
-                    <SearchResults results={props.searchResults} />
+                    <SearchResults results={props.searchResults} addSongHandler={props.addSongHandler} />
                 </div>
                 <div id="trackListWrapper" className={styles.trackListWrapper}>
-                    <Tracklist results={props.searchResults} />
+                    <Tracklist selectedSongs={props.selectedSongs} trackListText={props.trackListText} trackListTextHandler={props.trackListTextHandler}/>
                 </div>
             </div>
         </section>

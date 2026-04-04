@@ -1,3 +1,9 @@
+.trackListTextField{
+    width: 100%;
+    border: none;
+    padding: 0;
+}
+
 .songEntry{
     display: flex;
     justify-content: space-between;
