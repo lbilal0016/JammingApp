@@ -4,7 +4,7 @@ import Track from '../Track/Track.jsx';
 function Tracklist({selectedSongs, trackListText, trackListTextHandler, removeSongHandler}){
     return (
         <div id="trackListComponentWrapper">
-            <input type="text" value={trackListText} onChange={trackListTextHandler} className={styles.trackListTextField}></input>
+            <input type="text" value={trackListText} onChange={trackListTextHandler} className={styles.trackListTextField} placeholder={selectedSongs.length !== 0 ? 'Enter a name for your playlist' : ''}></input>
             <section id="searchResults" className={styles.searchResults}>
                 {
                     selectedSongs.map((song) => {
