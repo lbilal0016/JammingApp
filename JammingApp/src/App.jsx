@@ -7,27 +7,32 @@ import BodyContainer from './components/BodyContainer/BodyContainer.jsx'
 function App() {
 
   const [searchText, setSearchText] = useState('');
-  const [searchResults, setSearchResults] = useState(
-    [
-      {
-        song: 'Song',
-        artist: 'artist',
-        album: 'album',
-        year: 'year'    
-      }, 
-      {
-        song: 'Song',
-        artist: 'artist',
-        album: 'album',
-        year: 'year'    
-      }
-    ]
-  );
+  const [searchResults, setSearchResults] = useState([]);
 
   const searchEntryHandler = e => {
     setSearchText(e.target.value);
-
   };
+
+  const searchOnClickHandler = () => {
+    //  placeholder song list
+    const songList = []
+
+    //  placeholder 
+    const numSongs = 2;
+    for(let i = 0; i < numSongs; i++){
+      songList.push(
+        {
+        song: 'Song',
+        artist: 'artist',
+        album: 'album',
+        year: 'year',
+        id: (i+1)  
+        }
+      )
+    }
+
+    setSearchResults(songList);
+  }
 
   return (
     <>
@@ -35,7 +40,8 @@ function App() {
       <BodyContainer 
       searchText={searchText} 
       searchEntryHandler={searchEntryHandler} 
-      searchResults={searchResults} 
+      searchResults={searchResults}
+      searchOnClickHandler={searchOnClickHandler} 
       />  
     </>
   )
