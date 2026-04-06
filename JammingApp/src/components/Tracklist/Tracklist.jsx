@@ -19,6 +19,7 @@ function Tracklist({selectedSongs, trackListText, trackListTextHandler, removeSo
                     })
                 }        
             </section>
+            <button className={styles.addSpotifyButton}>Add to Spotify</button>
         </div>
     );
 }
