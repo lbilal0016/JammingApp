@@ -1,7 +1,7 @@
 import styles from './Tracklist.module.css';
 import Track from '../Track/Track.jsx';
 
-function Tracklist({selectedSongs, trackListText, trackListTextHandler, removeSongHandler}){
+function Tracklist({selectedSongs, trackListText, trackListTextHandler, removeSongHandler, addSpotifyHandler}){
     return (
         <div id="trackListComponentWrapper">
             <input type="text" value={trackListText} onChange={trackListTextHandler} className={styles.trackListTextField} placeholder={selectedSongs.length !== 0 ? 'Enter a name for your playlist' : ''}></input>
@@ -19,7 +19,7 @@ function Tracklist({selectedSongs, trackListText, trackListTextHandler, removeSo
                     })
                 }        
             </section>
-            <button className={styles.addSpotifyButton}>Add to Spotify</button>
+            <button className={styles.addSpotifyButton} onClick={addSpotifyHandler}>Add to Spotify</button>
         </div>
     );
 }

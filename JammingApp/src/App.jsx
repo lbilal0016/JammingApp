@@ -29,8 +29,8 @@ function App() {
       for(let i = 0; i < numSongs; i++){
         songList.push(
           {
-          song: 'Song',
-          artist: 'artist',
+          song: 'Welcome to the Jungle',
+          artist: 'Guns \'n Roses',
           album: 'album',
           year: 'year',
           id: (i+1)  
@@ -55,6 +55,25 @@ function App() {
     });
   };
 
+  const printSongs = () => {
+        let addedSongs = [];
+        selectedSongs.map((songItem) => {
+          addedSongs += songItem.song;
+          addedSongs += ', ';
+          addedSongs += songItem.artist;
+          addedSongs += ', ';
+          addedSongs += songItem.year;
+          addedSongs += '\n';
+        });
+        return addedSongs;
+  };
+
+
+  const addSpotifyHandler = () => {
+    //  Dummy functionality for add spotify handler button
+    alert(`Your tracklist with the following name has been created with the songs you have selected: ${trackListText}.\nAdded songs:\n${printSongs()}`);
+  };
+
   return (
     <>
       <Header />
@@ -68,6 +87,7 @@ function App() {
       selectedSongs={selectedSongs}
       addSongHandler={addSongHandler}
       removeSongHandler={removeSongHandler}
+      addSpotifyHandler={addSpotifyHandler}
 
       />  
     </>

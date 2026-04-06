@@ -4,6 +4,7 @@ import Track from '../Track/Track.jsx';
 function SearchResults({results, addSongHandler}){
     return (
         <section id="searchResults" className={styles.searchResults}>
+            <h2>Results</h2>
             {
                 results.map((result) => {
                     return (
