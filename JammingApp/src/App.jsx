@@ -4,8 +4,9 @@ import './App.css'
 import Header from './components/Header/Header.jsx';
 import BodyContainer from './components/BodyContainer/BodyContainer.jsx';
 
-const CLIENT_ID = '8352906fdc125e99870b97d1519dce6f';
-const CLIENT_SECRET = '1a896e0ec5784a4783bd827179e7fd5b';
+//  CLIENT_ID and CLIENT_SECRET are not valid here since they cannot be shared openly, they need to be created before the application is started
+const CLIENT_ID = '8352906fdc114e99980b97d1520dce6f';
+const CLIENT_SECRET = '1a896e0ec4695a4783bd827289e7fd5b';
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
   const [searchResults, setSearchResults] = useState([]);
   const [selectedSongs, setSelectedSongs] = useState([]);
   const [accessToken, setAccessToken] = useState('');
+  const [tracks, setTracks] = useState([]);
 
   useEffect(() => {
     //  API Access Token
@@ -45,7 +47,7 @@ function App() {
 
     //  get request using search to get the Artist ID
 
-    let artistParameters = {
+    let searchParameters = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -53,10 +55,41 @@ function App() {
       }
     }
 
-    let artistID = await fetch('https://api.spotify.com/v1/search?q=' + searchText + '&type=artist', artistParameters)
+    let trackID = await fetch('https://api.spotify.com/v1/search?q=' + searchText + '&type=track&limit=10', searchParameters)
     .then(response => response.json())
-    .then(data => console.log(data));
+    .then(data => {
+      /*
+      console.log(data);
+      console.log(data.tracks.items[0].id);
+      */
+
+      //  fill tracks array
+      data.tracks.items.forEach((track) => {
+        setTracks((prev) => [...prev, track]);
+      });
+
+      //  fill searchResults array
+      tracks.forEach((trackResult) => {
+        setSearchResults((prev) => {
+          return [...prev, {
+            song: trackResult.name,
+            artist: trackResult.artists[0].name,
+            album: trackResult.album.name,
+            year: trackResult.album.release_date.substring(0,4),
+            id: trackResult.id
+          }]
+        })
+      });
+    });
+
     // get request with Artist ID grab all the albums from the artist
+   /*
+    let albums = await fetch('https://api.spotify.com/v1/artists/' + artistID + '/albums' + '?include_groups=album&limit=10', searchParameters)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data)
+    });
+    */
 
     // Display albums to user
 
@@ -71,27 +104,29 @@ function App() {
   };
 
   const searchOnClickHandler = () => {
-    //  placeholder song list
-    const songList = [];
 
+    setSearchResults([]);
+    setTracks([]);
+    
     if(searchText !== ''){
-      //  placeholder 
-      const numSongs = 2;
-      for(let i = 0; i < numSongs; i++){
-        songList.push(
-          {
-          song: 'Welcome to the Jungle',
-          artist: 'Guns \'n Roses',
-          album: 'album',
-          year: 'year',
-          id: (i+1)  
-          }
-        )
-      }
-      setSearchResults(songList);
+      /*
+        //  placeholder song list
+        const songList = [];
+        //  placeholder 
+        const numSongs = 2;
+        for(let i = 0; i < numSongs; i++){
+          songList.push(
+            {
+            song: 'Welcome to the Jungle',
+            artist: 'Guns \'n Roses',
+            album: 'album',
+            year: 'year',
+            id: (i+1)  
+            }
+          )
+        }
+      */
       searchSpotify();
-    } else{
-      setSearchResults([]);
     }
   };
 
