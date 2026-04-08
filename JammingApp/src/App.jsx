@@ -5,8 +5,8 @@ import Header from './components/Header/Header.jsx';
 import BodyContainer from './components/BodyContainer/BodyContainer.jsx';
 
 //  CLIENT_ID and CLIENT_SECRET are not valid here since they cannot be shared openly, they need to be created before the application is started
-const CLIENT_ID = '8352906fdc114e99980b97d1520dce6f';
-const CLIENT_SECRET = '1a896e0ec4695a4783bd827289e7fd5b';
+const CLIENT_ID = '8352906fdc114e00970b97d1519dce6f';
+const CLIENT_SECRET = '1a896e0ec4684a5893bd827179e7fd5b';
 
 function App() {
 
@@ -58,10 +58,6 @@ function App() {
     let trackID = await fetch('https://api.spotify.com/v1/search?q=' + searchText + '&type=track&limit=10', searchParameters)
     .then(response => response.json())
     .then(data => {
-      /*
-      console.log(data);
-      console.log(data.tracks.items[0].id);
-      */
 
       //  fill tracks array
       data.tracks.items.forEach((track) => {
@@ -81,18 +77,6 @@ function App() {
         })
       });
     });
-
-    // get request with Artist ID grab all the albums from the artist
-   /*
-    let albums = await fetch('https://api.spotify.com/v1/artists/' + artistID + '/albums' + '?include_groups=album&limit=10', searchParameters)
-    .then(response => response.json())
-    .then(data => {
-      console.log(data)
-    });
-    */
-
-    // Display albums to user
-
   };
 
   const searchEntryHandler = e => {
@@ -109,24 +93,14 @@ function App() {
     setTracks([]);
     
     if(searchText !== ''){
-      /*
-        //  placeholder song list
-        const songList = [];
-        //  placeholder 
-        const numSongs = 2;
-        for(let i = 0; i < numSongs; i++){
-          songList.push(
-            {
-            song: 'Welcome to the Jungle',
-            artist: 'Guns \'n Roses',
-            album: 'album',
-            year: 'year',
-            id: (i+1)  
-            }
-          )
-        }
-      */
       searchSpotify();
+    }
+  };
+
+  const enterKeyHandler = (e) => {
+    //  making searches when pressing enter instead of clicking on 'Search' button
+    if(e.key === 'Enter'){
+      searchOnClickHandler();
     }
   };
 
@@ -175,6 +149,7 @@ function App() {
       addSongHandler={addSongHandler}
       removeSongHandler={removeSongHandler}
       addSpotifyHandler={addSpotifyHandler}
+      enterKeyHandler={enterKeyHandler}
 
       />  
     </>

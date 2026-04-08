@@ -9,7 +9,7 @@ function BodyContainer(props){
     return (
         <section id="body-container" className={styles.bodyContainer}>
             <div className={styles.searchBarWrapper}>
-                <SearchBar searchText={props.searchText} searchEntryHandler={props.searchEntryHandler} />
+                <SearchBar searchText={props.searchText} searchEntryHandler={props.searchEntryHandler} enterKeyHandler={props.enterKeyHandler}/>
             </div>
             <div id="searchButtonWrapper" className={styles.searchButtonWrapper}>
                 <SearchButton onClickHandler={props.searchOnClickHandler} />
