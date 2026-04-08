@@ -5,8 +5,8 @@ import Header from './components/Header/Header.jsx';
 import BodyContainer from './components/BodyContainer/BodyContainer.jsx';
 
 //  CLIENT_ID and CLIENT_SECRET are not valid here since they cannot be shared openly, they need to be created before the application is started
-const CLIENT_ID = '8352906fdc114e00970b97d1519dce6f';
-const CLIENT_SECRET = '1a896e0ec4684a5893bd827179e7fd5b';
+const CLIENT_ID = '9463016fdc114e99870b97d1519dce6f';
+const CLIENT_SECRET = '1a896e0ec4684a5894bd827179e7fd5b';
 
 function App() {
 
@@ -15,7 +15,7 @@ function App() {
   const [searchResults, setSearchResults] = useState([]);
   const [selectedSongs, setSelectedSongs] = useState([]);
   const [accessToken, setAccessToken] = useState('');
-  const [tracks, setTracks] = useState([]);
+  const [uriArray, setUriArray] = useState([]);
 
   useEffect(() => {
     //  API Access Token
@@ -30,7 +30,7 @@ function App() {
     fetch('https://accounts.spotify.com/api/token', authParameters)
     .then(result => {
       if(result.ok){
-        return result.json()
+        return result.json();
       }
       throw new Error('Request Failed!');
     }, networkError => {
@@ -55,24 +55,21 @@ function App() {
       }
     }
 
-    let trackID = await fetch('https://api.spotify.com/v1/search?q=' + searchText + '&type=track&limit=10', searchParameters)
+    let trackID = await fetch('https://api.spotify.com/v1/search?q=' + searchText + '&type=track&limit=5', searchParameters)
     .then(response => response.json())
     .then(data => {
-
-      //  fill tracks array
-      data.tracks.items.forEach((track) => {
-        setTracks((prev) => [...prev, track]);
-      });
+      console.log(data);
 
       //  fill searchResults array
-      tracks.forEach((trackResult) => {
+      data.tracks.items.forEach((trackResult) => {
         setSearchResults((prev) => {
           return [...prev, {
             song: trackResult.name,
             artist: trackResult.artists[0].name,
             album: trackResult.album.name,
             year: trackResult.album.release_date.substring(0,4),
-            id: trackResult.id
+            id: trackResult.id,
+            uri: trackResult.uri
           }]
         })
       });
@@ -88,10 +85,10 @@ function App() {
   };
 
   const searchOnClickHandler = () => {
-
+    //  clear previous results
     setSearchResults([]);
-    setTracks([]);
     
+    //  set new results if a non-empty search query was made
     if(searchText !== ''){
       searchSpotify();
     }
@@ -133,6 +130,20 @@ function App() {
   const addSpotifyHandler = () => {
     //  Dummy functionality for add spotify handler button
     alert(`Your tracklist with the following name has been created with the songs you have selected: ${trackListText}.\nAdded songs:\n${printSongs()}`);
+
+    //  Save track uri to uriArray
+    if(selectedSongs.length > 0){
+      selectedSongs.forEach((song) => {
+        //  add song uri to uriArray if it was not added before
+        if(!uriArray.includes(song.uri)){
+          setUriArray((prev) => [...prev, song.uri]);
+        }
+      });
+    } else {
+      //  if nothing is selected empty the uriArray
+      setUriArray([]);
+    }
+      //  uriArray.forEach((uri) => {console.log(uri)});
   };
 
   return (
