@@ -5,8 +5,19 @@ import Header from './components/Header/Header.jsx';
 import BodyContainer from './components/BodyContainer/BodyContainer.jsx';
 
 //  CLIENT_ID and CLIENT_SECRET are not valid here since they cannot be shared openly, they need to be created before the application is started
-const CLIENT_ID = '9463016fdc114e99870b97d1519dce6f';
-const CLIENT_SECRET = '1a896e0ec4684a5894bd827179e7fd5b';
+const CLIENT_ID = '8352906fdc114e99870b97d1519dce6f';
+const CLIENT_SECRET = '1a896e0ec5795a4783bd938279e7fd5b';
+
+//  Spotify endpoint http request string components
+const SPOTIFY_AUTHORIZE_ENDPOINT = 'https://accounts.spotify.com/authorize';
+const REDIRECT_URL_AFTER_LOGIN = "http://127.0.0.1:5173/";
+
+//  User permissions to be asked from Spotify API
+const SCOPES = ['playlist-read-private', 'playlist-read-collaborative', 'playlist-modify-private', 'playlist-modify-public'];
+
+//  Scopes url parameters
+const SPACE_DELIMITER = '%20';
+const SCOPES_URL_PARAM = SCOPES.join(SPACE_DELIMITER);
 
 function App() {
 
@@ -16,6 +27,7 @@ function App() {
   const [selectedSongs, setSelectedSongs] = useState([]);
   const [accessToken, setAccessToken] = useState('');
   const [uriArray, setUriArray] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     //  API Access Token
@@ -47,13 +59,13 @@ function App() {
 
     //  get request using search to get the Artist ID
 
-    let searchParameters = {
+    const searchParameters = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + accessToken
       }
-    }
+    };
 
     let trackID = await fetch('https://api.spotify.com/v1/search?q=' + searchText + '&type=track&limit=5', searchParameters)
     .then(response => response.json())
@@ -76,6 +88,38 @@ function App() {
     });
   };
 
+  async function createSpotifyPlaylist(){
+    const postParameters = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + accessToken
+      }
+    };
+
+    //  get the playlist name from state variable 
+    const playListName = trackListText === '' ? 'New Playlist' : trackListText;
+
+    const createPlaylist = await fetch('https://api.spotify.com/v1/me/playlists?name=' + playListName + '&public=false', postParameters)
+    .then(response => response.json())
+    .then( data => {
+      console.log(data);
+    });
+  };
+
+  /*  not implemented yet
+  async function addSpotifyPlaylist(){
+    const searchParameters = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + accessToken
+      }
+    };
+
+
+  };*/
+
   const searchEntryHandler = e => {
     setSearchText(e.target.value);
   };
@@ -91,6 +135,14 @@ function App() {
     //  set new results if a non-empty search query was made
     if(searchText !== ''){
       searchSpotify();
+    }
+  };
+
+  //  Dummy function 
+  const loginOnClickHandler = () => {
+    if(!isLoggedIn){
+      setIsLoggedIn(true);
+      window.location = `${SPOTIFY_AUTHORIZE_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URL_AFTER_LOGIN}&scope=${SCOPES_URL_PARAM}&response_type=code&show_dialog=true`;
     }
   };
 
@@ -144,6 +196,7 @@ function App() {
       setUriArray([]);
     }
       //  uriArray.forEach((uri) => {console.log(uri)});
+      createSpotifyPlaylist();
   };
 
   return (
@@ -154,6 +207,7 @@ function App() {
       searchEntryHandler={searchEntryHandler} 
       searchResults={searchResults}
       searchOnClickHandler={searchOnClickHandler}
+      loginOnClickHandler={loginOnClickHandler}
       trackListText={trackListText}
       trackListTextHandler={trackListTextHandler}
       selectedSongs={selectedSongs}
@@ -161,6 +215,7 @@ function App() {
       removeSongHandler={removeSongHandler}
       addSpotifyHandler={addSpotifyHandler}
       enterKeyHandler={enterKeyHandler}
+      isLoggedIn={isLoggedIn}
 
       />  
     </>

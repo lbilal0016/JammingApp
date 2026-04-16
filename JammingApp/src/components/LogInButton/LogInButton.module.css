@@ -1,0 +1,13 @@
+.logInButton{
+    background-color: #1db954;
+    border: solid 0.1rem #323232;
+    border-radius: 0.5rem;
+    width: 8rem;
+    height: 1.8rem;
+    font-size: 0.9rem;
+}
+
+.logInButton:active{
+    transform: translateY(0.4rem);
+    background-color: #14813a;
+}
